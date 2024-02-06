@@ -39,7 +39,10 @@ const template = [
       {
         label: 'Video',
         submenu: [
-          { label: 'Load...' }
+          {
+            label: 'Load...',
+            click: () => console.log('Loading...'),
+          }
         ]
       },
       { type: 'separator' },
