@@ -24,7 +24,9 @@ const template = [
                 height: 605,
                 resizable: false,
                 webPreferences: {
-                  preload: path.join(__dirname, 'videoPreload.js')
+                  nodeIntegration: true,
+                  contextIsolation: false,
+                  // preload: path.join(__dirname, 'videoPreload.js')
                 }
               })
               loadVideoWindow.loadFile('loadVideo.html');
