@@ -9,3 +9,16 @@ window.addEventListener('DOMContentLoaded', () => {
     replaceText(`${dependency}-version`, process.versions[dependency])
   }
 })
+
+// const { contextBridge, ipcRenderer } = require('electron');
+// document.querySelector('#videoButton').disabled = false;
+// document.getElementById('videoButton').addEventListener('click', () => {
+//   console.log('video button')
+// });
+
+
+
+
+
+
+

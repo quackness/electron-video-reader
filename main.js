@@ -1,7 +1,22 @@
-const { app, BrowserWindow, Menu } = require('electron');
+const { app, BrowserWindow, Menu, ipcMain } = require('electron');
 const path = require('node:path');
 
 const isMac = process.platform === 'darwin';
+
+const createWindow = () => {
+  const mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 605,
+    resizable: false,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+      //preload: path.join(__dirname, 'preload.js')
+    }
+  })
+  mainWindow.loadFile('index.html');
+  mainWindow.webContents.openDevTools();
+}
 
 const template = [
   ...(isMac
@@ -24,9 +39,9 @@ const template = [
                 height: 605,
                 resizable: false,
                 webPreferences: {
-                  nodeIntegration: true,
-                  contextIsolation: false,
-                  // preload: path.join(__dirname, 'videoPreload.js')
+                  // nodeIntegration: true,
+                  // contextIsolation: false,
+                  preload: path.join(__dirname, "videoPreload.js")
                 }
               })
               loadVideoWindow.loadFile('loadVideo.html');
@@ -49,20 +64,7 @@ const template = [
 const menu = Menu.buildFromTemplate(template)
 Menu.setApplicationMenu(menu)
 
-const createWindow = () => {
-  const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 605,
-    resizable: false,
-    webPreferences: {
-      nodeIntegration: true,
-      contextIsolation: false,
-      // preload: path.join(__dirname, 'preload.js')
-    }
-  })
-  mainWindow.loadFile('index.html');
-  mainWindow.webContents.openDevTools();
-}
+
 
 app.whenReady().then(() => {
   createWindow();
@@ -70,6 +72,19 @@ app.whenReady().then(() => {
     if (BrowserWindow.getAllWindows().length === 0) createWindow()
   })
 });
+
+//hnadle new video selected
+//https://www.electronjs.org/docs/latest/tutorial/ipc#pattern-1-renderer-to-main-one-way
+// ipcMain.on('fileSelected', (e) => {
+//   console.log(e.target)
+// });
+
+
+
+
+
+
+
 
 
 
