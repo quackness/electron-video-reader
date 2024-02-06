@@ -1,30 +1,7 @@
 const { app, BrowserWindow, Menu } = require('electron');
 const path = require('node:path');
 
-const createWindow = () => {
-  const mainWindow = new BrowserWindow({
-    width: 1000,
-    height: 605,
-    resizable: false,
-    webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
-    }
-  })
-
-  mainWindow.loadFile('index.html');
-  mainWindow.webContents.openDevTools();
-}
-
-
-app.whenReady().then(() => {
-  createWindow();
-  app.on('activate', () => {
-    if (BrowserWindow.getAllWindows().length === 0) createWindow()
-  })
-});
-
-const isMac = process.platform === 'darwin'
-
+const isMac = process.platform === 'darwin';
 
 const template = [
   ...(isMac
@@ -41,7 +18,18 @@ const template = [
         submenu: [
           {
             label: 'Load...',
-            click: () => console.log('Loading...'),
+            click: () => {
+              const loadVideoWindow = new BrowserWindow({
+                width: 1000,
+                height: 605,
+                resizable: false,
+                webPreferences: {
+                  preload: path.join(__dirname, 'videoPreload.js')
+                }
+              })
+              loadVideoWindow.loadFile('loadVideo.html');
+              loadVideoWindow.webContents.openDevTools();
+            },
           }
         ]
       },
@@ -58,6 +46,26 @@ const template = [
 
 const menu = Menu.buildFromTemplate(template)
 Menu.setApplicationMenu(menu)
+
+const createWindow = () => {
+  const mainWindow = new BrowserWindow({
+    width: 1000,
+    height: 605,
+    resizable: false,
+    webPreferences: {
+      preload: path.join(__dirname, 'preload.js')
+    }
+  })
+  mainWindow.loadFile('index.html');
+  mainWindow.webContents.openDevTools();
+}
+
+app.whenReady().then(() => {
+  createWindow();
+  app.on('activate', () => {
+    if (BrowserWindow.getAllWindows().length === 0) createWindow()
+  })
+});
 
 
 
