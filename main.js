@@ -10,8 +10,8 @@ const createWindow = () => {
     resizable: false,
     webPreferences: {
       nodeIntegration: true,
-      contextIsolation: false,
-      //preload: path.join(__dirname, 'preload.js')
+      contextIsolation: true,
+      preload: path.join(__dirname, 'preload.js')
     }
   })
   mainWindow.loadFile('index.html');
@@ -39,8 +39,8 @@ const template = [
                 height: 605,
                 resizable: false,
                 webPreferences: {
-                  // nodeIntegration: true,
-                  // contextIsolation: false,
+                  nodeIntegration: true,
+                  contextIsolation: false,
                   preload: path.join(__dirname, "videoPreload.js")
                 }
               })
@@ -75,9 +75,15 @@ app.whenReady().then(() => {
 
 //hnadle new video selected
 //https://www.electronjs.org/docs/latest/tutorial/ipc#pattern-1-renderer-to-main-one-way
-// ipcMain.on('fileSelected', (e) => {
-//   console.log(e.target)
-// });
+ipcMain.on('file-selected', (event, filePath) => {
+  console.log(filePath)
+  const videoLoaded = {
+    src: filePath,
+    type: "video/mp4",
+  }
+  console.log(videoLoaded);
+  event.sender.send('videoLoaded', videoLoaded)
+});
 
 
 

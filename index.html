@@ -18,16 +18,24 @@
 </head>
 
 <body>
-    <div>
+    <!-- <div>
         You are using Node.js <span id="node-version"></span>,
         Chromium <span id="chrome-version"></span>,
         and Electron <span id="electron-version"></span>.
-    </div>
+    </div> -->
     <div class="container mt-4">
         <h1 id="selectFile" hidden>Select a video from the menu</h1>
-        <video class="js-player">
-            <source src="sample.mp4" />
+        <!-- https://github.com/sampotts/plyr -->
+        <video id="player" playsinline controls data-poster="/path/to/poster.jpg">
+            <source id="video-src" src="" type="video/mp4" />
+            <!-- <source src="/path/to/video.webm" type="video/webm" /> -->
+
+            <!-- Captions are optional -->
+            <track kind="captions" label="English captions" src="/path/to/captions.vtt" srclang="en" default />
         </video>
+        <!-- <video class="js-player">
+            <source src="sample.mp4" />
+        </video> -->
 
     </div>
 
