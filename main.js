@@ -55,7 +55,9 @@ const createWindow = () => {
     height: 605,
     resizable: false,
     webPreferences: {
-      preload: path.join(__dirname, 'preload.js')
+      nodeIntegration: true,
+      contextIsolation: false,
+      // preload: path.join(__dirname, 'preload.js')
     }
   })
   mainWindow.loadFile('index.html');
